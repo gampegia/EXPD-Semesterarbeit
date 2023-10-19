@@ -8,7 +8,7 @@ vec_shooter_age <- na.exclude(vec_shooter_age)
 View(vec_shooter_age)
 
 hist(vec_shooter_age, col = "lightblue", xlab = "Age [Years]",
-     main = "Shooter", ylab = "Density",
+     main = "Age of school shooters", ylab = "Density",
      breaks = c(seq(0, 80, by = 1)),
      las = 1, freq = FALSE)
 axis(side=1, at=seq(0, 100, by=10))
