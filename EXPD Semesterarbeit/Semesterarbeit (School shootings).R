@@ -1,3 +1,4 @@
+setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
 library(readr)
 dat <- read_csv("school-shootings-data.csv")
 View(dat)
@@ -19,7 +20,7 @@ legend("top", legend = paste("Median =", median_age_shooter), col = "red", lty =
 # Number schoolshootings
 hist(dat$year,
      breaks = c(seq(1999, 2023)),
-     main = "Number of school shootings in the US since 1999",
+     main = "Numbers of school shootings in the US since 1999",
      xaxt = "n",
      xlab = "Years",
      col = "lightblue")
