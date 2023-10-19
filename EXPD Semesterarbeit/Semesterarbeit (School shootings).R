@@ -21,7 +21,8 @@ hist(dat$year,
      breaks = c(seq(1999, 2023)),
      main = "Number of school shootings in the US since 1999",
      xaxt = "n",
-     xlab = "Years")
+     xlab = "Years",
+     col = "lightblue")
 axis(side = 1, at = seq(1999, 2023, by = 1))
 
 meanshootings <- length(dat$year)/length(unique(dat$year))
