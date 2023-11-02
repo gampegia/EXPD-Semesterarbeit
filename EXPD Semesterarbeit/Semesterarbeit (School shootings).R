@@ -35,3 +35,13 @@ medianshootings <- median(c(mediantable))
 # Add Median and Legend to plot
 abline(h = medianshootings, col = "red", lty = 1, lwd = 2)
 legend("top", legend = paste("Median Shootings: ", round(medianshootings, 2)), col = "red", lty = 1, lwd = 2)
+
+# W8
+
+# Diagramm 1
+scatter.smooth(x = dat$age_shooter1,
+               y = dat$casualties,
+               col = ,
+               lpars = list(col = "blue", lwd = 2),
+               asp = 1,
+               main = "Alter des Schützen / Anzahl Opfer (Tote + Verletzte)")
