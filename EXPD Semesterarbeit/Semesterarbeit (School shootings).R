@@ -43,8 +43,6 @@ legend("top", legend = paste("Median Shootings: ", round(medianshootings, 2)), c
 
 plot(x = dat$age_shooter1,
      y = dat$casualties,
-     lpars = list(col = "blue", lwd = 2),
-     sp = 1,
      col = adjustcolor("black", alpha = 0.2),
      pch = 19,
      main = "Shooter Age / Number of casualties",
@@ -52,6 +50,5 @@ plot(x = dat$age_shooter1,
      xlab = "Age of the shooter",
      log = "y",
      )
-
-
-
+abline(v = median_age_shooter, col = "red", lwd = 2)
+legend("topright", legend = paste("Median age of shooter: ", round(median_age_shooter, 2)), col = "red", lty = 1, lwd = 2)
