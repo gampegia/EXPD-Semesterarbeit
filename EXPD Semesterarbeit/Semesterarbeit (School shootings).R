@@ -1,4 +1,4 @@
-setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
+#setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
 library(readr)
 dat <- read_csv("school-shootings-data.csv")
 View(dat)
