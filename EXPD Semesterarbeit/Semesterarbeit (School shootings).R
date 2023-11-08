@@ -1,5 +1,8 @@
-setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
+#setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
+setwd("C:\\Users\\glm87\\Documents\\GITHUB\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
 library(readr)
+install.packages("ggplot2")
+library("ggplot2")
 dat <- read_csv("school-shootings-data.csv")
 View(dat)
 
@@ -52,3 +55,9 @@ plot(x = dat$age_shooter1,
      )
 abline(v = median_age_shooter, col = "red", lwd = 2)
 legend("topright", legend = paste("Median age of shooter: ", round(median_age_shooter, 2)), col = "red", lty = 1, lwd = 2)
+
+# DIAGRAMM 2
+
+diag_shooting_type <- ggplot(dat, aes(x = casualties, y = shooting_type)) +
+  geom_boxplot()
+diag_shooting_type + labs(x = "Casualties" , y = "Shooting Type" , title ="Casulties per shooting Type"  )
