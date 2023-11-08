@@ -1,5 +1,8 @@
 #setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
+setwd("C:\\Users\\glm87\\Documents\\GITHUB\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
 library(readr)
+install.packages("ggplot2")
+library("ggplot2")
 dat <- read_csv("school-shootings-data.csv")
 View(dat)
 
@@ -52,6 +55,8 @@ plot(x = dat$age_shooter1,
      xlab = "Age of the shooter",
      log = "y",
      )
+# DIAGRAMM 2
 
-
-
+diag_shooting_type <- ggplot(dat, aes(x = casualties, y = shooting_type)) +
+  geom_boxplot()
+diag_shooting_type + labs(x = "Casualties" , y = "Shooting Type" , title ="Casulties per shooting Type"  )
