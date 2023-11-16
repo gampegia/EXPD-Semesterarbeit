@@ -2,7 +2,7 @@ setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD 
 # setwd("C:\\Users\\glm87\\Documents\\GITHUB\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
 library(readr)
 install.packages("ggplot2")
-library("ggplot2")
+library(ggplot2)
 dat <- read_csv("school-shootings-data.csv")
 View(dat)
 
@@ -61,3 +61,22 @@ legend("topright", legend = paste("Median age of shooter: ", round(median_age_sh
 diag_shooting_type <- ggplot(dat, aes(x = casualties, y = shooting_type)) +
   geom_boxplot()
 diag_shooting_type + labs(x = "Casualties" , y = "Shooting Type" , title ="Casulties per shooting Type"  )
+
+
+#------------------------------------------------
+library(ggplot2)
+install.packages("ggmap")
+library(ggmap)
+
+# creating a sample data.frame with your lat/lon points
+
+
+# getting the map
+mapgilbert <- get_map(location = c(lon = mean(dat$long), lat = mean(dat$lat)), zoom = 4,
+                      maptype = "satellite", scale = 2)
+
+# plotting the map with some points on it
+ggmap(mapgilbert) +
+  geom_point(data = df, aes(x = lon, y = lat, fill = "red", alpha = 0.8), size = 5, shape = 21) +
+  guides(fill=FALSE, alpha=FALSE, size=FALSE)
+
