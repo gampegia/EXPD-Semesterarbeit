@@ -1,10 +1,10 @@
 setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
 # setwd("C:\\Users\\glm87\\Documents\\GITHUB\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
-library(readr)
 install.packages("ggplot2")
 library(ggplot2)
+library(readr)
 dat <- read_csv("school-shootings-data.csv")
-View(dat)
+View(school_shootings_data)
 
 # Age of Shooter
 vec_shooter_age <- c(dat$age_shooter1,dat$age_shooter2) 
@@ -79,4 +79,31 @@ mapgilbert <- get_map(location = c(lon = mean(dat$long), lat = mean(dat$lat)), z
 ggmap(mapgilbert) +
   geom_point(data = df, aes(x = lon, y = lat, fill = "red", alpha = 0.8), size = 5, shape = 21) +
   guides(fill=FALSE, alpha=FALSE, size=FALSE)
+
+# Abgabe 4
+# Multivariate Grafik 1
+
+install.packages("ggmosaic", dependencies = T)
+library(ggmosaic)
+
+library(readr)
+US_partys <- read_csv("US partys.csv")
+
+US_partys$dominant_party <- ifelse(US_partys$`Republican/lean Rep.` > US_partys$`Democrat/lean Dem.`, "Republican", "Democratic")
+names(US_partys)[names(US_partys) == "State"] <- "state"
+
+
+dat <- merge(dat, US_partys[,c("state", "dominant_party")],
+                     by = "state",
+                     all.x = TRUE)
+
+party_colors <- c("Democratic" = "blue", "Republican" = "red")
+
+ggplot(data = dat, aes(x = injured, y = killed, color = dominant_party, shape = school_type)) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.2)) +
+  scale_color_manual(values = party_colors)
+
+
+
+
 
