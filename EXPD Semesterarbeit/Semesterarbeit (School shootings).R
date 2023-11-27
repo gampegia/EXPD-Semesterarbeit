@@ -103,6 +103,10 @@ ggplot(data = dat, aes(x = injured, y = killed, color = dominant_party, shape = 
   geom_point(position = position_jitter(width = 0.2, height = 0.2)) +
   scale_color_manual(values = party_colors)
 
+ggplot(data = dat, aes(x = dominant_party, fill = dominant_party)) +
+  geom_bar() +
+  scale_fill_manual(values = party_colors)
+
 
 
 
