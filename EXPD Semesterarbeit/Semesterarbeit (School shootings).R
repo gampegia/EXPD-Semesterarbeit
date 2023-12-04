@@ -1,5 +1,5 @@
 setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
-# setwd("C:\\Users\\glm87\\Documents\\GITHUB\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
+setwd("C:\\Users\\glm87\\Documents\\GITHUB\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
 install.packages("ggplot2")
 library(ggplot2)
 library(readr)
@@ -100,6 +100,41 @@ dat <- merge(dat, US_partys[,c("state", "dominant_party")],
 party_colors <- c("Democratic" = "blue", "Republican" = "red")
 
 ggplot(data = dat, aes(x = injured, y = killed, color = dominant_party, shape = school_type)) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.2)) +
+  scale_color_manual(values = party_colors)
+
+ggplot(data = dat, aes(x = dominant_party, fill = dominant_party)) +
+  geom_bar() +
+  scale_fill_manual(values = party_colors)
+
+
+
+# Abgabe 4
+# Multivariate Grafik 2
+{r}
+install.packages("ggmosaic", dependencies = T)
+library(ggmosaic)
+
+library(readr)
+guns <- read_csv("gun_pc_23.csv")
+dat <- merge(dat, guns[,c("state", "gpc")],
+             by = "state",
+             all.x = TRUE)
+
+
+US_partys <- read_csv("US partys.csv")
+
+US_partys$dominant_party <- ifelse(US_partys$`Republican/lean Rep.` > US_partys$`Democrat/lean Dem.`, "Republican", "Democratic")
+names(US_partys)[names(US_partys) == "State"] <- "state"
+
+
+dat <- merge(dat, US_partys[,c("state", "dominant_party")],
+             by = "state",
+             all.x = TRUE)
+
+party_colors <- c("Democratic" = "blue", "Republican" = "red")
+
+ggplot(data = dat, aes(x = gpc, y = killed, color = dominant_party)) +
   geom_point(position = position_jitter(width = 0.2, height = 0.2)) +
   scale_color_manual(values = party_colors)
 
