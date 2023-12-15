@@ -1,15 +1,14 @@
 setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
 #setwd("C:\\Users\\glm87\\Documents\\GITHUB\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
-install.packages("ggplot2")
+# install.packages("ggplot2")
 library(ggplot2)
 library(readr)
 dat <- read_csv("school-shootings-data.csv")
-View(school_shootings_data)
+View(dat)
 
 # Age of Shooter
 vec_shooter_age <- c(dat$age_shooter1,dat$age_shooter2) 
 vec_shooter_age <- na.exclude(vec_shooter_age)
-View(vec_shooter_age)
 
 hist(vec_shooter_age, col = "lightblue", xlab = "Age [Years]",
      main = "Age of school shooters", ylab = "Density",
@@ -64,26 +63,10 @@ diag_shooting_type + labs(x = "Casualties" , y = "Shooting Type" , title ="Casul
 
 
 #------------------------------------------------
-library(ggplot2)
-install.packages("ggmap")
-library(ggmap)
-
-# creating a sample data.frame with your lat/lon points
-
-
-# getting the map
-mapgilbert <- get_map(location = c(lon = mean(dat$long), lat = mean(dat$lat)), zoom = 4,
-                      maptype = "satellite", scale = 2)
-
-# plotting the map with some points on it
-ggmap(mapgilbert) +
-  geom_point(data = df, aes(x = lon, y = lat, fill = "red", alpha = 0.8), size = 5, shape = 21) +
-  guides(fill=FALSE, alpha=FALSE, size=FALSE)
-
 # Abgabe 4
 # Multivariate Grafik 1
 
-install.packages("ggmosaic", dependencies = T)
+# install.packages("ggmosaic", dependencies = T)
 library(ggmosaic)
 
 library(readr)
@@ -101,20 +84,23 @@ party_colors <- c("Democratic" = "blue", "Republican" = "red")
 
 ggplot(data = dat, aes(x = injured, y = killed, color = dominant_party, shape = school_type)) +
   geom_point(position = position_jitter(width = 0.2, height = 0.2)) +
-  scale_color_manual(values = party_colors)
+  scale_color_manual(values = party_colors) +
+  ggtitle("Injuries and Killings by Party Affiliation and School Type")
+
+
 
 ggplot(data = dat, aes(x = dominant_party, fill = dominant_party)) +
   geom_bar() +
-  scale_fill_manual(values = party_colors)
+  scale_fill_manual(values = party_colors) +
+  ggtitle("Injuries and Killings by Party Affiliation and School Type")
+
 
 
 
 # Abgabe 4
 # Multivariate Grafik 2
-{r}
-install.packages("ggmosaic", dependencies = T)
+# install.packages("ggmosaic", dependencies = T)
 library(ggmosaic)
-
 library(readr)
 guns <- read_csv("gun_pc_23.csv")
 dat <- merge(dat, guns[,c("state", "gpc")],
@@ -136,11 +122,14 @@ party_colors <- c("Democratic" = "blue", "Republican" = "red")
 
 ggplot(data = dat, aes(x = gpc, y = killed, color = dominant_party)) +
   geom_point(position = position_jitter(width = 0.2, height = 0.2)) +
-  scale_color_manual(values = party_colors)
+  scale_color_manual(values = party_colors) +
+  ggtitle("Gun Ownership per Capita vs. Killings by Party Affiliation")
+
 
 ggplot(data = dat, aes(x = dominant_party, fill = dominant_party)) +
   geom_bar() +
-  scale_fill_manual(values = party_colors)
+  scale_fill_manual(values = party_colors) +
+    ggtitle("Gun Ownership per Capita vs. Killings by Party Affiliation")
 
 
 
