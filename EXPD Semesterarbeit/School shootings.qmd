@@ -12,10 +12,14 @@ output:
 {{< pagebreak >}}
 
 ```{r include=FALSE}
-setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
-#setwd("C:\\Users\\glm87\\Documents\\GITHUB\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
+#setwd("C:\\Users\\jonas\\OneDrive\\Dokumente\\GitHub\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
+setwd("C:\\Users\\glm87\\Documents\\GITHUB\\EXPD-Semesterarbeit\\EXPD Semesterarbeit")
 # install.packages("ggplot2")
+#install.packages("kableExtra")
 library(ggplot2)
+library(kableExtra)
+#run in CMD::
+# mpm --install tabu 
 library(readr)
 dat <- read_csv("school-shootings-data.csv")
 ```
@@ -25,7 +29,43 @@ dat <- read_csv("school-shootings-data.csv")
 In dieser Semesterarbeit analysieren wir Daten zu Schießereien der letzten drei Jahrzehnte an US-Amerikanischen Schulen. Der Datensatz umfasst, basierend auf Forschung von Pah/Amaral/Hagan und Wikipedia,  eine Bandbreite von Vorfällen, von unbeabsichtigten Schüssen bis zu Massenmorden. Im Fokus steht die relative Gefährdung von Schülern durch Schusswaffen, unabhängig von den Tätermotiven. Den Datensatz stammt von der Website Kaggle (https://www.kaggle.com/code/ecodan/us-school-shootings-dataset).
 
 
-# Tabelle mit den wichtigsten Variabeln und ersten Werten
+
+# Tabelle mit den wichtigsten Variabeln und deren beschreibung
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Erstellen eines Dataframes mit Variablennamen und Beschreibungen
+variable_descriptions <- data.frame(
+  Variable = c(
+    "uid", "nces_school_id", "school_name", "nces_district_id", "district_name", 
+    "date", "school_year", "year", "time", "day_of_week", "city", "state", 
+    "school_type", "enrollment", "killed", "injured", "casualties", "shooting_type", 
+    "age_shooter1", "gender_shooter1", "race_ethnicity_shooter1", "shooter_relationship1", 
+    "shooter_deceased1", "deceased_notes1", "age_shooter2", "gender_shooter2", 
+    "race_ethnicity_shooter2", "shooter_relationship2", "shooter_deceased2", 
+    "deceased_notes2"
+  ),
+  Beschreibung = c(
+    "Einzigartige Identifikationsnummer", "NCES Schul-ID", "Name der Schule", 
+    "NCES Distrikt-ID", "Name des Schuldistrikts", "Datum des Ereignisses", 
+    "Schuljahr des Ereignisses", "Jahr des Ereignisses", "Uhrzeit des Ereignisses", 
+    "Wochentag des Ereignisses", "Stadt der Schule", "Bundesstaat der Schule", 
+    "Schultyp", "Anzahl der eingeschriebenen Schüler", "Anzahl der Todesopfer", 
+    "Anzahl der Verletzten", "Gesamtzahl der Opfer", "Art des Schießereignisses", 
+    "Alter des ersten Schützen", "Geschlecht des ersten Schützen", 
+    "Rasse/Ethnizität des ersten Schützen", "Beziehung des ersten Schützen zur Schule", 
+    "Informationen, ob der erste Schütze verstorben ist", "Anmerkungen zum Tod des ersten Schützen", 
+    "Alter des zweiten Schützen", "Geschlecht des zweiten Schützen", 
+    "Rasse/Ethnizität des zweiten Schützen", "Beziehung des zweiten Schützen zur Schule", 
+    "Informationen, ob der zweite Schütze verstorben ist", "Anmerkungen zum Tod des zweiten Schützen"
+  )
+)
+
+# Erzeugen der Tabelle mit kable für ein PDF-Dokument
+kable(variable_descriptions, format = "latex", booktabs = TRUE, longtable = TRUE) %>%
+  kable_styling(font_size = 7)
+
+```
+
+{{< pagebreak >}}
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 # Age of Shooter
@@ -43,6 +83,8 @@ legend("top", legend = paste("Median =", median_age_shooter), col = "red", lty =
 
 
 ```
+Die Grafik zeigt ein Histogramm, das das Alter von Schützen auf der X-Achse mit dem Medianwert bei 16 Jahren und de relativen Häufigkeit auf der Y-Achse darstellt.
+Primär konzentriert sich die Verteilung auf das Teenager Alter, was auf Schüler:innen hindeutet. Jedoch gibt es auch einige Schützen welche ein Alter deutlich über dem typischen Schulalter aufweisen. Dies könnten möglicherweise Lehrer:innen oder andere Angestellte der Schule sein.
 
 {{< pagebreak >}}
 
@@ -104,7 +146,7 @@ diag_shooting_type <- ggplot(dat, aes(x = casualties, y = shooting_type)) +
   geom_boxplot()
 diag_shooting_type + labs(x = "Casualties" , y = "Shooting Type" , title ="Casulties per shooting Type"  )
 ```
-
+Die Obenstehende Boxplot Grafik stellt die Anzahl Opfer nach Art des Vorfalls dar. Dabei ist klar zu erkennen, dass  bei Indiscriminate die grösste Streuung vorhanden ist. Dies deutet darauf hin, dass die Opferzahlen bei solchen Vorfällen sehr unterschiedlich ausfallen. Bei Suiziden sowie Unfällen sind die Opferzahlen erwartungsgemäss eher gering.
 {{< pagebreak >}}
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -152,3 +194,4 @@ ggplot(data = dat, aes(x = gpc, y = killed, color = dominant_party)) +
   ggtitle("Gun Ownership per Capita vs. Killings by Party Affiliation")
 
 ```
+In diesem Diagramm sind auf der X-Achse die Waffen pro 100 Einwohner (Guns per Capita) für den jeweiligen Bundestaat gemäss einem Datensatz aus dem Jahr 2023 und auf der Y-Achse die Anzahl der getöteten Personen pro Vorfall dargestellt. Zusätzlich haben wir unseren Datensatz durch Informationen zur politischen Ausrichtung jedes Bundesstaates erweitert, die aus dem Wahljahr 2020 stammen. Hier ist zu erkennen, dass die meisten Vorfälle in Bundestaaten mit einem gpc von 10 bis 30 stattfanden. Ein Anstieg von vorfällen in Bundestaaten mit höheren GPC ist aufgrund dieser Daten nicht zu Beobachten.
